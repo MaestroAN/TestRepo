@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--load application properties-->
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <bean id="myFortune" class="lv.myapp.HappyFortuneService">
+
+    </bean>
+    <bean id="rngFortune" class="lv.myapp.RandomFortuneService">
+
+    </bean>
+
+    <bean id="myCricketCoach" class="lv.myapp.CricketCoach">
+        <!--setter injection-->
+        <property name="fortuneService" ref="myFortune"></property>
+        <!--inject literal values-->
+        <!--<property name="emailAddress" value="maestro113an@gmail.com"></property>
+        <property name="team" value="Cricket Team"></property>-->
+        <property name="emailAddress" value="${foo.email}"></property>
+        <property name="team" value="${foo.team}"></property>
+    </bean>
+
+    <bean id="myCoach" class="lv.myapp.TrackCoach">
+        <!--Setup constructor injection-->
+        <constructor-arg ref="rngFortune"></constructor-arg>
+    </bean>
+</beans>
